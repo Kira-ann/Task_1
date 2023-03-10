@@ -5,7 +5,7 @@ public class Main {
     private final int line;
     private char[][] status;
 
-    Main(int line, int column) {
+    public Main(int line, int column) {
         this.line = line;
         this.column = column;
         char[][] status = new char[line][column];
@@ -14,7 +14,7 @@ public class Main {
                 status[i][j] = ' ';
             }
         }
-        System.out.println(status);
+        this.status = status;
     }
 
     public void delete(int lineSecond, int columnSecond) {
@@ -38,8 +38,53 @@ public class Main {
         }
         return maximum;
     }
-    public char[][] getStatus() {
-        return status;
+    public int diagonalLength(char chip){//метод для нахождения самой длинной последовательности по диагонали
+        int maximum = 0;
+        int ans = 0;
+        for (int i = 0; i < status.length; i++) {
+            if (status[i][i] == chip) {
+                ans++;
+                maximum = Math.max(maximum, ans);
+            }
+            else ans = 0;
+        }
+        ans = 0;
+        for (int i = 0; i < status.length; i++) {
+            if (status[i][column - i - 1] == chip) {
+                ans++;
+                maximum = Math.max(maximum, ans);
+            }
+            else ans = 0;
+        }
+        return maximum;
+    }
+    public int lineVertical(char chip){
+        int maximum = 0;
+        for(int i = 0; i < column; i++){
+            int ans = 0;
+            for(int j = 0; j < line; j++){
+                if (status[j][i] == chip) {
+                    ans ++;
+                    maximum = Math.max(maximum, ans);
+                }
+                else ans = 0;
+            }
+        }
+        return maximum;
+    }
+    public char getStatus(int a, int b) {
+        return status[a][b];
+    }
+    @Override
+    public String toString(){
+        String temp = "";
+        for (int i = 0; i < status.length; i++) {
+            for (int j = 0; j < status[i].length; j++) {
+                temp = temp + status[i][j] + " ";
+            }
+            temp = temp + "\n";
+        }
+        return temp;
     }
 }
 
